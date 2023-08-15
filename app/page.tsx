@@ -2,21 +2,115 @@
 
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
+// MUI Icons
+import DeviceThermostatOutlinedIcon from "@mui/icons-material/DeviceThermostatOutlined";
+import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
+import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
+import CompressOutlinedIcon from "@mui/icons-material/CompressOutlined";
+import { TextField } from "./components";
 
 const API_KEY = "762ab43071067db34fa20f7f0d5ba384";
+const WEATHER_CONDITIONS = {
+  Thunderstorm: {
+    icon: "/icons/rain.png",
+    color: "#616161",
+  },
+  Drizzle: {
+    icon: "/icons/drizzle.png",
+    color: "#616161",
+  },
+  Rain: {
+    icon: "/icons/rain.svg",
+    color: "#616161",
+  },
+  Snow: {
+    icon: "/icons/snow.png",
+    color: "#616161",
+  },
+  Mist: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Smoke: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Haze: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Dust: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Fog: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Sand: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Ash: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Squall: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Tornado: {
+    icon: "/icons/mist.png",
+    color: "#616161",
+  },
+  Clear: {
+    icon: "/icons/clear.png",
+    color: "#616161",
+  },
+  Clouds: {
+    icon: "/icons/clouds.png",
+    color: "#616161",
+  },
+};
+
+const DataCard = ({
+  icon,
+  title,
+  data,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  data: string;
+}) => {
+  return (
+    <>
+      <div className="flex flex-row gap-5 items-center justify-center">
+        <div className="flex items-center justify-center w-10 h-10 p-5 text-white opacity-60">
+          <div className="w-50 h-50">{icon}</div>
+        </div>
+        <div className="flex flex-col items-left justify-center text-white opacity-60 font-poppins">
+          <p className="text-lg">{title}</p>
+          <p className="text-2xl font-semibold">{data}</p>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default function Home() {
-  const [cityName, setCityName] = useState("halifax");
+  const [cityName, setCityName] = useState("");
   const [temp, setTemp] = useState(0);
   const [weather, setWeather] = useState("");
-  // const [icon, setIcon] = useState("");
   const [humidity, setHumidity] = useState(0);
   const [wind, setWind] = useState(0);
   const [pressure, setPressure] = useState(0);
+  const [weatherIcon, setWeatherIcon] = useState("");
+  const [weatherCondition, setWeatherCondition] = useState("");
 
-  useEffect(() => {
-    // fetch data from API
+  const searchButtonClickHandler = () => {
+    setCityName(cityName.toLowerCase());
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`
@@ -24,41 +118,67 @@ export default function Home() {
       .then((res) => {
         console.log(res.data);
         setTemp(res.data.main.temp);
-        setTemp(Number((res.data?.main?.temp - 273.15).toFixed(2)));
+        setTemp(Number((res.data?.main?.temp - 273.15).toFixed(0)));
         setWeather(res.data?.weather[0]?.main);
         setHumidity(res.data?.main?.humidity);
         setWind(res.data?.wind?.speed);
         setPressure(res.data?.main?.pressure);
+        // map weather condition to icon
+        setWeatherCondition(res.data?.weather[0]?.main);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  }, [cityName]);
+  };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Weather App</h1>
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex items-center justify-center">
-          <input
-            className="border border-gray-400 rounded-md p-2"
-            type="text"
+    <main>
+      <Image
+        src="/images/background.jpg"
+        alt="background"
+        layout="fill"
+        objectFit="cover"
+        quality={100}
+        className="z-0"
+      />
+
+      <div className="absolute z-1 flex items-center justify-center bg-gradient-to-t from-black to-transparent h-[100vh] lg:h-[100vh] w-full">
+        <div className="flex flex-col items-center justify-center gap-10">
+          <TextField
+            label="Enter city name"
             value={cityName}
-            onChange={(e) => setCityName(e.target.value)}
+            onChangeHandler={(e) => setCityName(e.target.value.toLowerCase())}
+            onClickHandler={searchButtonClickHandler}
+            onMouseDownHandler={searchButtonClickHandler}
           />
-          <button
-            className="bg-blue-500 text-white rounded-md p-2 ml-2"
-            onClick={() => setCityName(cityName)}
-          >
-            Search
-          </button>
-        </div>
-        <div className="flex items-center justify-center">
+
           <div className="flex flex-col items-center justify-center">
-            <p>{weather}</p>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <p>Temperature: {temp}</p>
-            <p>Humidity: {humidity}</p>
-            <p>Wind: {wind}</p>
-            <p>Pressure: {pressure}</p>
+            <div className="flex flex-row gap-40 items-center justify-center bottom-40 absolute">
+              <DataCard
+                icon={
+                  <DeviceThermostatOutlinedIcon
+                    sx={{ width: 50, height: 50 }}
+                  />
+                }
+                title="Temperature"
+                data={`${temp}°C`}
+              />
+              <DataCard
+                icon={<WaterDropOutlinedIcon sx={{ width: 50, height: 50 }} />}
+                title="Humidity"
+                data={`${humidity}%`}
+              />
+              <DataCard
+                icon={<AirOutlinedIcon sx={{ width: 50, height: 50 }} />}
+                title="Wind"
+                data={`${wind}m/s`}
+              />
+              <DataCard
+                icon={<CompressOutlinedIcon sx={{ width: 50, height: 50 }} />}
+                title="Pressure"
+                data={`${pressure}hPa`}
+              />
+            </div>
           </div>
         </div>
       </div>
