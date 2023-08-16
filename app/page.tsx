@@ -11,7 +11,8 @@ import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import CompressOutlinedIcon from "@mui/icons-material/CompressOutlined";
 import { TextField } from "./components";
 
-const API_KEY = "762ab43071067db34fa20f7f0d5ba384";
+const API_KEY = process.env.OPEN_WEATHER_API_KEY;
+
 const WEATHER_CONDITIONS = {
   Thunderstorm: {
     icon: "/icons/rain.png",
