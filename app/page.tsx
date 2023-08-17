@@ -10,6 +10,7 @@ import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import CompressOutlinedIcon from "@mui/icons-material/CompressOutlined";
 import { TextField } from "./components";
+import { error } from "console";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY;
 
@@ -76,6 +77,19 @@ const WEATHER_CONDITIONS = {
   },
 };
 
+interface Quote {
+  quote: string;
+  author: string;
+  category: string;
+}
+
+const QUOTE = [
+  {
+    quote: "It is always the simple that produces the marvelous.",
+    author: "Amelia Barr",
+    category: "inspirational",
+  },
+];
 const DataCard = ({
   icon,
   title,
@@ -109,6 +123,11 @@ export default function Home() {
   const [pressure, setPressure] = useState(0);
   const [weatherIcon, setWeatherIcon] = useState("");
   const [weatherCondition, setWeatherCondition] = useState("");
+  const [quote, setQuote] = useState<Quote>({
+    quote: "",
+    author: "",
+    category: "",
+  });
 
   const searchButtonClickHandler = () => {
     setCityName(cityName.toLowerCase());
@@ -132,6 +151,69 @@ export default function Home() {
       });
   };
 
+  const TemperatureDataCard = ({ temperature }: { temperature: number }) => {
+    return (
+      <>
+        <DataCard
+          icon={<DeviceThermostatOutlinedIcon sx={{ width: 50, height: 50 }} />}
+          title="Temperature"
+          data={`${temperature}°C`}
+        />
+      </>
+    );
+  };
+
+  const HumidityDataCard = ({ humidity }: { humidity: number }) => {
+    return (
+      <>
+        <DataCard
+          icon={<WaterDropOutlinedIcon sx={{ width: 50, height: 50 }} />}
+          title="Humidity"
+          data={`${humidity}%`}
+        />
+      </>
+    );
+  };
+
+  const WindDataCard = ({ windSpeed }: { windSpeed: number }) => {
+    return (
+      <>
+        <DataCard
+          icon={<AirOutlinedIcon sx={{ width: 50, height: 50 }} />}
+          title="Wind"
+          data={`${windSpeed}m/s`}
+        />
+      </>
+    );
+  };
+
+  const PressureDataCard = ({ pressure }: { pressure: number }) => {
+    return (
+      <>
+        <DataCard
+          icon={<CompressOutlinedIcon sx={{ width: 50, height: 50 }} />}
+          title="Pressure"
+          data={`${pressure}hPa`}
+        />
+      </>
+    );
+  };
+
+  useEffect(() => {
+    axios
+      .get("https://api.api-ninjas.com/v1/quotes?category=inspirational", {
+        headers: {
+          "X-Api-Key": process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY,
+        },
+      })
+      .then((response: any) => {
+        setQuote(response.data[0]);
+      })
+      .catch((error) => {
+        console.log("Quotes Error: ", error);
+      });
+  }, []);
+
   return (
     <main>
       <Image
@@ -154,32 +236,17 @@ export default function Home() {
             onMouseDownHandler={searchButtonClickHandler}
           />
 
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-row gap-40 items-center justify-center bottom-40 absolute">
-              <DataCard
-                icon={
-                  <DeviceThermostatOutlinedIcon
-                    sx={{ width: 50, height: 50 }}
-                  />
-                }
-                title="Temperature"
-                data={`${temp}°C`}
-              />
-              <DataCard
-                icon={<WaterDropOutlinedIcon sx={{ width: 50, height: 50 }} />}
-                title="Humidity"
-                data={`${humidity}%`}
-              />
-              <DataCard
-                icon={<AirOutlinedIcon sx={{ width: 50, height: 50 }} />}
-                title="Wind"
-                data={`${wind}m/s`}
-              />
-              <DataCard
-                icon={<CompressOutlinedIcon sx={{ width: 50, height: 50 }} />}
-                title="Pressure"
-                data={`${pressure}hPa`}
-              />
+          <div className="flex flex-col items-left justify-center text-white opacity-60 font-poppins gap-2">
+            <p className="text-xl">{`" ${quote.quote} "`}</p>
+            <p className="text-center opacity-80">{`- ${quote.author}`}</p>
+          </div>
+
+          <div className="flex flex-col items-center justify-center bottom-32 absolute gap-16">
+            <div className="flex flex-row gap-40 items-center justify-center ">
+              <TemperatureDataCard temperature={temp} />
+              <HumidityDataCard humidity={humidity} />
+              <WindDataCard windSpeed={wind} />
+              <PressureDataCard pressure={pressure} />
             </div>
           </div>
         </div>
