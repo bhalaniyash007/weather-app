@@ -32,7 +32,10 @@ const TextField = (props: TextFieldProps) => {
       <OutlinedInput
         placeholder={placeholder}
         fullWidth
-        className="bg-gray-100 font-poppins font-semibold rounded-full px-4 bg-opacity-80 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+        sx={{
+          borderRadius: "50px",
+        }}
+        className="bg-gray-100 font-poppins font-semibold px-4 bg-opacity-80 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
         value={value}
         onChange={onChangeHandler}
         endAdornment={
