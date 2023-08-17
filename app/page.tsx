@@ -203,7 +203,7 @@ export default function Home() {
     axios
       .get("https://api.api-ninjas.com/v1/quotes?category=inspirational", {
         headers: {
-          "X-Api-Key": process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY,
+          "X-Api-Key": process.env.NEXT_PUBLIC_QUOTES_API_KEY,
         },
       })
       .then((response: any) => {
@@ -236,13 +236,14 @@ export default function Home() {
             onMouseDownHandler={searchButtonClickHandler}
           />
 
-          <div className="flex flex-col items-left justify-center text-white opacity-60 font-poppins gap-2">
+          <div className="flex flex-col items-left justify-center text-white opacity-60 font-poppins gap-2 mx-52">
             <p className="text-xl">{`" ${quote.quote} "`}</p>
+
             <p className="text-center opacity-80">{`- ${quote.author}`}</p>
           </div>
 
-          <div className="flex flex-col items-center justify-center bottom-32 absolute gap-16">
-            <div className="flex flex-row gap-40 items-center justify-center ">
+          <div className="flex flex-col items-center justify-center bottom-32 absolute gap-10">
+            <div className="flex flex-row gap-40 items-center justify-center">
               <TemperatureDataCard temperature={temp} />
               <HumidityDataCard humidity={humidity} />
               <WindDataCard windSpeed={wind} />
