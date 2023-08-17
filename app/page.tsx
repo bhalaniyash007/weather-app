@@ -149,6 +149,7 @@ export default function Home() {
             label="Enter city name"
             value={cityName}
             onChangeHandler={(e) => setCityName(e.target.value.toLowerCase())}
+            placeholder="Enter city name"
             onClickHandler={searchButtonClickHandler}
             onMouseDownHandler={searchButtonClickHandler}
           />
