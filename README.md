@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weather Web App
 
-## Getting Started
+## Description
 
-First, run the development server:
+The Weather Data Web App is a simple web application built using Next.js and Tailwind CSS that allows users to fetch and display weather data for a specific location using a WeatherAPI. This project serves as a practical example of integrating API data into a web application.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Technologies Used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js: A React framework for building web applications.
+- Tailwind CSS: A utility-first CSS framework for designing modern and responsive web interfaces.
+- Git & GitHub: Version control and collaboration platform.
+- HTML: Markup language for web content.
+- JavaScript: Programming language for web interactivity.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Fetch weather data by providing a location.
+- Display current weather conditions, temperature, humidity, and more.
+- Clean and responsive user interface.
+- Easy-to-use and intuitive design.
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone this repository to your local machine using `git clone`.
+2. Navigate to the project directory: `cd weather-data-web-app`.
+3. Install project dependencies: `npm install`.
+4. Create a free account and obtain an API key from [WeatherAPI](https://www.weatherapi.com/).
+5. Create a `.env.local` file in the project root and add your API key as follows:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+WEATHER_API_KEY=your_api_key_here
 
-## Deploy on Vercel
+6. Start the development server: `npm run dev`.
+7. Open your browser and go to `http://localhost:3000` to access the app.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Enter the name of the location you want to fetch weather data for in the input field.
+2. Click the "Get Weather Data" button.
+3. View the weather data displayed on the screen.
+
+## Contributing
+
+Contributions to this project are welcome! To contribute, follow these steps:
+
+1. Fork this repository.
+2. Create a new branch: `git checkout -b feature/your-feature`.
+3. Commit your changes: `git commit -m 'Add your feature'`.
+4. Push to the branch: `git push origin feature/your-feature`.
+5. Submit a pull request.
+
+Please make sure to follow our [Code of Conduct](CODE_OF_CONDUCT.md) and review our [Contribution Guidelines](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions or suggestions, feel free to reach out:
+
+- Email: [developer.yash.bhalani@gmail.com](mailto:developer.yash.bhalani@gmail.com)
+- GitHub: [bhalaniyash007](https://github.com/bhalaniyash007)
+
+## Acknowledgments
+
+- Thanks to [WeatherAPI](https://www.weatherapi.com/) for providing the weather data.
+- Inspired by [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/) communities.
